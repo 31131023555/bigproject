@@ -1,6 +1,13 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'amazon/ecs'
+
+Amazon::Ecs.configure do |options|
+  options[:AWS_access_key_id] = 'AKIAJZZDZYTTQDXPLARQ'
+  options[:AWS_secret_key] = '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'
+  options[:associate_tag] = 'acots-20'
+end
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
