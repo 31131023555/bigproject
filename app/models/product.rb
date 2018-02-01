@@ -11,10 +11,13 @@ class Product < ApplicationRecord
 	before_validation :strip_html_from_description
 	
 	def decode_html_entities_from_description
+		self.title = HTMLEntities.new.decode self.title
 		self.description = HTMLEntities.new.decode self.description
 	end
 
 	def strip_html_from_description
+		self.title = ActionView::Base.full_sanitizer.sanitize(
+			self.title)
 		self.description = ActionView::Base.full_sanitizer.sanitize(
 			self.description)
 	end
