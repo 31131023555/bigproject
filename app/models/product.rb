@@ -2,6 +2,7 @@ require 'htmlentities'
 
 class Product < ApplicationRecord
 	belongs_to :category, optional: true	
+	has_many :order_items
 	validates :title, presence: true
 	validates :description, presence: true
 	validates :price, presence: true, numericality: { greater_than: 0 }

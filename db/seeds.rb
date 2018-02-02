@@ -1,3 +1,4 @@
+Category.destroy_all
 categories_list = [
   'Books', 'Toys', 'Luggage', 'Wireless', 'KindleStore', 
   'Appliances', 'VideoGames', 'Electronics', 'Automotive', 'Baby'
@@ -23,3 +24,9 @@ categories_list.each do |cat|
     )
   end
 end
+
+CartStatus.destroy_all
+CartStatus.create! id: 1, name: "In Progress"
+CartStatus.create! id: 2, name: "Placed"
+CartStatus.create! id: 3, name: "Shipped"
+CartStatus.create! id: 4, name: "Cancelled"
