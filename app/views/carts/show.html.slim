@@ -1,0 +1,10 @@
+div.content
+  div.shopping-cart
+    = render "carts/shopping_cart"
+
+.pay
+  p
+    | Total: 
+    span = number_to_currency @cart.subtotal
+  hr
+  = link_to 'Check out', '#'

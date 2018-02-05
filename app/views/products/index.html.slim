@@ -4,7 +4,7 @@ header
 		p
 			em Bring all the convenience to you
 	div.task
-		= link_to 'View cart', href='#', class: 'button'
+		= link_to 'View cart', cart_path(@cart), class: 'button'
 		= link_to 'Login', href='#', class: 'button'
 		- @categories.each do |cat|
 			= link_to cat.title, href="##{cat.title}", class: 'cat-nav'

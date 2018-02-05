@@ -65,4 +65,4 @@ gem 'amazon-ecs'
 gem 'slim'
 gem 'awesome_print'
 gem 'htmlentities'
-
+gem 'formtastic'
