@@ -7,18 +7,18 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    header
-      div.title
-        h1 = link_to 'ACOTS SHOP', products_path
-        p
-          em Bring all the convenience to you
-      div.task
-        = link_to 'View cart', cart_path(@cart), class: 'button'
-        = link_to 'Login', href='#', class: 'button'
-        = yield(:nav) 
+    / header
+    /   div.title
+    /     h1 = link_to 'ACOTS SHOP', products_path
+    /     p
+    /       em Bring all the convenience to you
+    /   div.task
+    /     = link_to 'View cart', cart_path(@cart), class: 'button'
+    /     = link_to 'Login', href='#', class: 'button'
+    /     = yield(:nav) 
 
-    / - flash.each do |name, msg|
-    /   = content_tag :div, msg, class: name
+    - flash.each do |name, msg|
+      = content_tag :div, msg, class: name
 
     = yield
  

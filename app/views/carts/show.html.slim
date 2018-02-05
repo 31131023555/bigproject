@@ -7,4 +7,4 @@ div.content
     | Total: 
     span = number_to_currency @cart.subtotal
   hr
-  = link_to 'Check out', '#'
+  = link_to 'Check out', new_order_path
