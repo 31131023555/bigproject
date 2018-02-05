@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :model do
   context 'validations' do
-    let!(:category) { create(:category)}
+    let!(:category) { create(:category) }
     let!(:product1) { create(:product, description: 
       '&lt;p&gt;This is description&lt;/p&gt;') }
     let!(:product2) { create(:product, description: 
