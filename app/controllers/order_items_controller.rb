@@ -1,6 +1,6 @@
 class OrderItemsController < ApplicationController
   def create
-    @cart = current_cart
+    #@cart = current_cart
     @order_item = @cart.order_items.find_by(product_id: params[:order_item][:product_id])
     if @order_item
       @order_item.quantity += 1
@@ -14,7 +14,7 @@ class OrderItemsController < ApplicationController
   end
 
   def update
-    @cart = current_cart
+    #@cart = current_cart
     @order_item = @cart.order_items.find(params[:id])
     @order_item.update_attributes(order_item_params)
     @order_items = @cart.order_items
@@ -25,7 +25,7 @@ class OrderItemsController < ApplicationController
   end
 
   def destroy
-    @cart = current_cart
+    #@cart = current_cart
     @order_item = @cart.order_items.find(params[:id])
     @order_item.destroy
     @order_items = @cart.order_items

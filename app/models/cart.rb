@@ -1,5 +1,6 @@
 class Cart < ApplicationRecord
   belongs_to :cart_status, optional: true
+  belongs_to :users, optional: true
   has_many :order_items
   before_create :set_cart_status
   before_save :update_subtotal
