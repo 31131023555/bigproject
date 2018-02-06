@@ -1,13 +1,13 @@
-header
-	div.title
-		h1 = link_to 'ACOTS SHOP', href='#'
-		p
-			em Bring all the convenience to you
-	div.task
-		= link_to 'View cart', cart_path(@cart), class: 'button'
-		= link_to 'Login', user_session_path, class: 'button'
-		- @categories.each do |cat|
-			= link_to cat.title, href="##{cat.title}", class: 'cat-nav'
+/ header
+/ 	div.title
+/ 		h1 = link_to 'ACOTS SHOP', href='#'
+/ 		p
+/ 			em Bring all the convenience to you
+/ 	div.task
+/ 		= link_to 'View cart', cart_path(@cart), class: 'button'
+/ 		= link_to 'Login', user_session_path, class: 'button'
+/ 		- @categories.each do |cat|
+/ 			= link_to cat.title, href="##{cat.title}", class: 'cat-nav'
 
 div.content
 	- flash.each do |name, msg|
