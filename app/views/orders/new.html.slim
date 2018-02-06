@@ -1,2 +1,18 @@
-- @cart.order_items.each do |order_item|
-  p = order_item.quantity
+.content
+  .grid-container
+    .order-info
+      - @cart.order_items.each do |order_item|
+        .item
+          h4 = order_item.product.title
+          p 
+            | Quantity: 
+            span = order_item.quantity
+          p 
+            | Price: 
+            span = number_to_currency order_item.total_price
+    .checkout
+      p 
+        | Email: 
+        span = @user.email
+
+  = link_to 'sign out', destroy_user_session_path, method: :delete
