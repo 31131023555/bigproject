@@ -10,6 +10,8 @@ header
 			= link_to cat.title, href="##{cat.title}", class: 'cat-nav'
 
 div.content
+	- flash.each do |name, msg|
+      = content_tag :div, msg, class: name
 	- @categories.each do |cat|
 		div.category
 			h2[id="#{cat.title}"] = cat.title

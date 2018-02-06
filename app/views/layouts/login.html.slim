@@ -14,7 +14,7 @@ html
           em Bring all the convenience to you
       div.task
         = link_to 'View cart', cart_path(@cart), class: 'button'
-        = link_to 'Login', user_session_path, class: 'button'
+        = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'button'
         / = yield(:nav)     
 
     = yield

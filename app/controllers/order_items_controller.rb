@@ -3,7 +3,7 @@ class OrderItemsController < ApplicationController
     #@cart = current_cart
     @order_item = @cart.order_items.find_by(product_id: params[:order_item][:product_id])
     if @order_item
-      @order_item.quantity += 1
+      @order_item.quantity += params[:order_item][:quantity].to_i
       @order_item.save
     else
       @order_item = @cart.order_items.create(order_item_params)

@@ -1,4 +1,6 @@
 div.content
+  - flash.each do |name, msg|
+      = content_tag :div, msg, class: name
   div.shopping-cart
     = render "carts/shopping_cart"
 

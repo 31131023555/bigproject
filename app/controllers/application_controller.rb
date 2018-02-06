@@ -1,15 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :current_cart
-
+  layout :get_layout
   # private
   # def current_cart
   #   @cart = Cart.find(cookies[:cart_id])
   # rescue ActiveRecord::RecordNotFound
   #   @cart = Cart.create
   #   cookies[:cart_id] = @cart.id
-  # end
-  
+  # end  
+    
   private
   def current_cart
     if !user_signed_in?
@@ -27,5 +27,9 @@ class ApplicationController < ActionController::Base
         @cart.update(user_id: current_user.id)
       end
     end    
+  end
+
+  def get_layout
+    user_signed_in? ? 'login' : 'application'
   end
 end
