@@ -1,6 +1,5 @@
 class OrderItemsController < ApplicationController
   def create
-    #@cart = current_cart
     @order_item = @cart.order_items.find_by(product_id: params[:order_item][:product_id])
     if @order_item
       @order_item.quantity += params[:order_item][:quantity].to_i
@@ -14,19 +13,13 @@ class OrderItemsController < ApplicationController
   end
 
   def update
-    #@cart = current_cart
     @order_item = @cart.order_items.find(params[:id])
     @order_item.update_attributes(order_item_params)
     @order_items = @cart.order_items
     redirect_to cart_path(@cart)
-
-    # respond_to do |f|      
-    #   f.js 
-    # end
   end
 
   def destroy
-    #@cart = current_cart
     @order_item = @cart.order_items.find(params[:id])
     @order_item.destroy
     @order_items = @cart.order_items

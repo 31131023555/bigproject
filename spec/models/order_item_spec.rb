@@ -9,12 +9,14 @@ RSpec.describe OrderItem, type: :model do
   let!(:order_item2) { build(:order_item, quantity: 5.5, cart_id: 99) }
 
   context 'validations' do
-    it {should validate_presence_of(:quantity) }
+    it { should validate_presence_of(:quantity) }
+
     it 'Quantity should be greater than 0' do
       order_item1.validate
       expect(order_item1.errors.messages).to include(quantity: [
         'must be greater than 0'])
     end
+
     it 'Quantity must be integer' do
       order_item2.validate
       expect(order_item2.errors.messages).to include(quantity: [
@@ -35,6 +37,11 @@ RSpec.describe OrderItem, type: :model do
       order_item2.validate
       expect(order_item2.errors.messages).to include(cart: [
         'is not a valid order.'])
+    end
+
+    it 'if unit price is persisted, product price changing does not affect unit price' do      
+      product.update_attribute(:price, 11.1)
+      expect(order_item.unit_price).to_not eq product.price
     end
   end
 

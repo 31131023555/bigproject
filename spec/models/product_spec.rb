@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe Product, type: :model do
   context 'validations' do
     let!(:category) { create(:category) }
-    let!(:product1) { create(:product, description: 
+    let!(:product1) { create(:product, title: 
+      '&lt;p&gt;This is title&lt;/p&gt;', description: 
       '&lt;p&gt;This is description&lt;/p&gt;') }
-    let!(:product2) { create(:product, description: 
+    let!(:product2) { create(:product, title: 
+      '<p>This is title</p>', description: 
       '<p>This is description</p>') }
     let!(:product3) { build(:product, description: 'Short') }
     let!(:product4) { build(:product, price: 0) }
@@ -15,12 +17,14 @@ RSpec.describe Product, type: :model do
     it { should validate_presence_of(:price) }
     it { should validate_presence_of(:imgurl) }
 
-    it 'There are not decoding HTML entities in description' do
+    it 'There are not decoding HTML entities in description and title' do
       expect(product1.description).to eq 'This is description'
+      expect(product1.title).to eq 'This is title'
     end
 
-    it 'There are not  HTML in description' do
+    it 'There are not  HTML in description and title' do
       expect(product2.description).to eq 'This is description'
+      expect(product2.title).to eq 'This is title'
     end
 
     it 'Title must be shorter than description' do
@@ -37,6 +41,7 @@ RSpec.describe Product, type: :model do
   end
 
   context 'associations' do
-    it {should belong_to(:category) }
+    it { should belong_to(:category) }
+    it { should have_many(:order_items) }
   end
 end
