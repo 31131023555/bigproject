@@ -1,3 +1,5 @@
+= javascript_include_tag 'https://www.paypalobjects.com/api/checkout.js'
+
 .content
   .grid-container#ordernew
     .order-info
@@ -23,6 +25,66 @@
           p If it is ok. You can checkout now.
           p Because we connect with Paypal so we encourage you pay by Paypal. It is very fast and convenient.
           p Hope you enjoy it!
-          = link_to image_tag(src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), '#'
+          #paypal-button
       .d2
         img src = "/assets/kitten.jpg"
+
+javascript:
+  paypal.Button.render({
+    env: 'sandbox', // Or 'sandbox',
+
+    client: {
+      sandbox:    'Ae6UT5rIW6ZfM9a52qUEnKA8ZoD3nwTW1vRO0sZ_Gxj6iDkkeLbBW06u-5_XtDREiDdcGihD4gxliGhm',
+      production: 'AR2VKfLCydJ3tTUX7Rt-_VnREKN9CqA2z4hrC3uqnNnX6dFL_XFSyJ9qVK6WdBwPjIci4Lhcr7apYdls'
+      },
+
+    commit: true, // Show a 'Pay Now' button
+
+    payment: function(data, actions) {
+      // return actions.payment.create({
+      //   payment: {
+      //     transactions: [
+      //       {
+      //         amount: { total: '1.00', currency: 'USD' }
+      //       }
+      //     ]
+      //   }
+      // });
+    },
+
+    onAuthorize: function(data, actions) {
+      // return actions.payment.execute().then(function(payment) {
+      //   window.alert('Payment Complete!');
+      // });
+    },
+
+    style: {
+      color: 'gold',
+      size: 'small'
+    },
+
+    // payment: function(data, actions) {
+    //   /* 
+    //    * Set up the payment here 
+    //    */
+    // },
+
+    // onAuthorize: function(data, actions) {
+    //   /* 
+    //    * Execute the payment here 
+    //    */
+    // },
+
+    // onCancel: function(data, actions) {
+    //   /* 
+    //    * Buyer cancelled the payment 
+    //    */
+    // },
+
+    // onError: function(err) {
+    //   /* 
+    //    * An error occurred during the transaction 
+    //    */
+    // }
+  }, '#paypal-button');
+ 
