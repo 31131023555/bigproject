@@ -8,6 +8,15 @@ class Cart < ApplicationRecord
   def subtotal
     order_items.collect { |oi| oi.valid? ? (oi.quantity*oi.unit_price) : 0 }.sum
   end
+
+  def shipping
+    subtotal < 50.0 ? shipping = 5.0 : 0
+  end
+
+  def total
+    total = subtotal + shipping
+  end
+
   private
   def set_cart_status
     self.cart_status_id = 1
@@ -15,5 +24,7 @@ class Cart < ApplicationRecord
 
   def update_subtotal
     self[:subtotal] = subtotal
+    self[:shipping] = shipping
+    self[:total] = total
   end
 end
