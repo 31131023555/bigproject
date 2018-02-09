@@ -1,4 +1,5 @@
 class OrderItemsController < ApplicationController
+  # skip_before_action :verify_authenticity_token
   def create
     @order_item = @cart.order_items.find_by(product_id: params[:order_item][:product_id])
     if @order_item
