@@ -1,4 +1,6 @@
 = javascript_include_tag 'https://www.paypalobjects.com/api/checkout.js'
+= javascript_include_tag 'https://js.braintreegateway.com/v2/braintree.js'
+= javascript_include_tag "transactions"
 
 .content
   .grid-container#ordernew
@@ -11,57 +13,114 @@
             span = order_item.quantity
           p 
             | Price: 
-            span = number_to_currency order_item.total_price
-      h4#right 
+            span.price = number_to_currency order_item.total_price
+      p.total
         | Cart price: 
-        span = number_to_currency @cart.subtotal
+        span.price = number_to_currency @cart.subtotal
+      p.total 
+        | Shipping: 
+        span.price = number_to_currency @cart.shipping  
+      h4.total 
+        | Total: 
+        span.price = number_to_currency @cart.total
+      p
+        em If you buy more than $50, the shipping is free! Else, it is $5.
     .checkout
       .d1
-        h4 
-          | Welcome  
-          span = @user.email
-        .speech
-          p Now, you are in checkout step. Please check all the items you have picked on to the cart whether it is right. 
-          p If it is ok. You can checkout now.
-          p Because we connect with Paypal so we encourage you pay by Paypal. It is very fast and convenient.
-          p Hope you enjoy it!
-          #paypal-button
-      .d2
-        img src = "/assets/kitten.jpg"
+        .noti
+          h4 
+            | Welcome  
+            span = @user.email
+          .speech
+            p Now, you are in checkout step. Please check all the items you have picked on to the cart whether it is right. 
+            p If it is ok. You can checkout now.
+            p Because we connect with Paypal so we encourage you pay by Paypal. It is very fast and convenient.
+            p Hope you enjoy it!
+        .pay-form    
+          = form_for @order do |f|
+            p#center Please enter your payment details:
+            p
+              | Your address: 
+              = f.text_field :delivery_address, class: "form-control"
+            = f.hidden_field :cart_id, value: @cart.id
+            = f.hidden_field :user_id, value: @user.id
+            = f.hidden_field :purchased_at, value: Time.now
+            #dropin
+            = submit_tag "Pay #{number_to_currency @cart.total}", class: "button mt1"
+      / .d2
+      /   img src = "/assets/kitten.jpg"
 
-javascript:
-  paypal.Button.render({
-    env: 'sandbox', // Or 'sandbox',
+  
 
-    client: {
-      sandbox:    'Ae6UT5rIW6ZfM9a52qUEnKA8ZoD3nwTW1vRO0sZ_Gxj6iDkkeLbBW06u-5_XtDREiDdcGihD4gxliGhm',
-      production: 'AR2VKfLCydJ3tTUX7Rt-_VnREKN9CqA2z4hrC3uqnNnX6dFL_XFSyJ9qVK6WdBwPjIci4Lhcr7apYdls'
-      },
+// javascript:
+//   paypal.Button.render({
+//     env: 'sandbox', // Or 'sandbox',
 
-    commit: true, // Show a 'Pay Now' button
+//     client: {
+//       sandbox:    'Ae6UT5rIW6ZfM9a52qUEnKA8ZoD3nwTW1vRO0sZ_Gxj6iDkkeLbBW06u-5_XtDREiDdcGihD4gxliGhm',
+//       production: 'AR2VKfLCydJ3tTUX7Rt-_VnREKN9CqA2z4hrC3uqnNnX6dFL_XFSyJ9qVK6WdBwPjIci4Lhcr7apYdls'
+//       },
 
-    payment: function(data, actions) {
-      // return actions.payment.create({
-      //   payment: {
-      //     transactions: [
-      //       {
-      //         amount: { total: '1.00', currency: 'USD' }
-      //       }
-      //     ]
-      //   }
-      // });
-    },
+//     commit: true, // Show a 'Pay Now' button
 
-    onAuthorize: function(data, actions) {
-      // return actions.payment.execute().then(function(payment) {
-      //   window.alert('Payment Complete!');
-      // });
-    },
+//     payment: function(data, actions) {
+//       return actions.payment.create({
+//         payment: {
+//           redirect_urls: {
+//             return_url: 'http://localhost:3000/payments/new',
+//             cancel_url: 'http://localhost:3000'
+//           },
+//           payer: { payment_method: 'paypal' },
+//           transactions: [
+//             {
+//               amount: { 
+//                 total: '4.00', 
+//                 currency: 'USD',
+//                 details:
+//                 {
+//                   subtotal: '2.00',
+//                   shipping: '1.00',
+//                   tax: '2.00',
+//                   shipping_discount: '-1.00'
+//                 } 
+//               },
+//               item_list: {
+//                 items: [{
+//                   quantity: '1',
+//                   name: 'item1',
+//                   price: '1',
+//                   currency: 'USD',
+//                   description: 'item 1 description',
+//                   tax: '1'
+//                 },
+//                 {
+//                   quantity: '1',
+//                   name: 'item2',
+//                   price: '1',
+//                   currency: 'USD',
+//                   description: 'item 2 description',
+//                   tax: '1'
+//                 }]
+//               },
+//               description: 'The payment transaction description.',
+//               invoice_number: 'merchant invoice',
+//               custom: 'merchant custom data'
+//             }
+//           ]
+//         }
+//       });
+//     },
 
-    style: {
-      color: 'gold',
-      size: 'small'
-    },
+//     onAuthorize: function(data, actions) {
+//       return actions.payment.execute().then(function(payment) {
+//         window.alert('Payment Complete!');
+//       });
+//     },
+
+//     style: {
+//       color: 'gold',
+//       size: 'small'
+//     },
 
     // payment: function(data, actions) {
     //   /* 
