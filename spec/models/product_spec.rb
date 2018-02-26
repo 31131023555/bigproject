@@ -10,7 +10,7 @@ RSpec.describe Product, type: :model do
       '<p>This is title</p>', description: 
       '<p>This is description</p>') }
     let!(:product3) { build(:product, description: 'Short') }
-    let!(:product4) { build(:product, price: 0) }
+    let!(:product4) { build(:product, price: -1) }
 
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:description) }
@@ -33,10 +33,10 @@ RSpec.describe Product, type: :model do
         'Title must be shorter than description'])
     end
 
-    it 'Price must be greater than 0' do
+    it 'Price must be greater than or equal to 0' do
       product4.validate
       expect(product4.errors.messages).to include(price: [
-        'must be greater than 0'])
+        'must be greater than or equal to 0'])
     end
   end
 
