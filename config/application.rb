@@ -23,3 +23,14 @@ module Bigproject
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+
+# GMAIL SMPTP
+ActionMailer::Base.smtp_settings = {
+  :address              => 'smtp.gmail.com',
+  :domain               => 'mail.google.com',
+  :port                 => 587,
+  :user_name            => "furybin@gmail.com",
+  :password             => "ngtieuly",
+  :authentication       => 'login',
+  :enable_starttls_auto => true
+}
