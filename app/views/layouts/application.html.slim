@@ -16,9 +16,10 @@ html
       div.task
         = link_to 'View cart', cart_path(@cart), class: 'button'
         = link_to 'Login', user_session_path, class: 'button'
-        - @categories.each do |cat|
-          = link_to cat.title, "/products##{cat.title}", class: 'cat-nav'
-        / = yield(:nav)     
+        = yield(:nav)     
 
     = yield
- 
+
+    footer
+      h4 ACOTS SHOP 2018
+      p All right reserved by FuryBin    
