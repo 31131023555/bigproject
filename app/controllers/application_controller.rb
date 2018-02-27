@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :current_cart
-  before_action :get_category
-  layout :get_layout
+  # before_action :get_category
+  # layout :get_layout
   # private
   # def current_cart
   #   @cart = Cart.find(cookies[:cart_id])
@@ -30,11 +30,11 @@ class ApplicationController < ActionController::Base
     end    
   end
 
-  def get_category
-    @categories = Category.all
-  end
+  # def get_category
+  #   @categories = Category.all
+  # end
 
-  def get_layout
-    user_signed_in? ? 'login' : 'application'
-  end
+  # def get_layout
+  #   user_signed_in? ? 'login' : 'application'
+  # end
 end
