@@ -1,7 +1,10 @@
+AdminUser.destroy_all
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
 Category.destroy_all
 categories_list = [
-  'Books', 'Toys', 'Luggage', 'Wireless', 'KindleStore', 
-  'Appliances', 'VideoGames', 'Electronics', 'Automotive', 'Baby'
+  'Books', 'Toys', 'Wireless', 'KindleStore', 
+  'Appliances', 'VideoGames', 'Electronics', 'Automotive', 'Baby', 'Luggage'
 ]
 
 categories_list.each do |cat|

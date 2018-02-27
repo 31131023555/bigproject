@@ -41,7 +41,7 @@
             p#center Please enter your payment details:
             p
               | Your address: 
-              = f.text_field :delivery_address, class: "form-control"
+              = f.text_field :delivery_address, class: "form-control", :required => true
             = f.hidden_field :cart_id, value: @cart.id
             = f.hidden_field :user_id, value: @user.id
             = f.hidden_field :purchased_at, value: Time.now

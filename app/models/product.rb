@@ -5,7 +5,7 @@ class Product < ApplicationRecord
 	has_many :order_items
 	validates :title, presence: true
 	validates :description, presence: true
-	validates :price, presence: true, numericality: { greater_than: 0 }
+	validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 	validates :imgurl, presence: true
 	validate :title_is_shorter_than_description
 	before_validation :decode_html_entities
