@@ -39,6 +39,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'awesome_print'
 end
 
 group :development do
@@ -63,6 +64,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'amazon-ecs'
 gem 'slim'
-gem 'awesome_print'
 gem 'htmlentities'
 gem 'formtastic'
