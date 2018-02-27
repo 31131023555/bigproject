@@ -3,14 +3,9 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   #skip_before_action :current_cart, only: [:new]
   def new 
-    if @cart.subtotal == 0
-      flash[:notice] = 'You cannot checkout when your cart have nothing!'
-      redirect_to root_path      
-    else
-      @user = current_user
-      gon.client_token = generate_client_token
-      @order = Order.new
-    end
+    @user = current_user
+    gon.client_token = generate_client_token
+    @order = Order.new
   end
 
   def create
@@ -18,13 +13,14 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)        
     @result = Braintree::Transaction.sale(
               amount: @cart.total,
-              payment_method_nonce: params[:payment_method_nonce])
+              payment_method_nonce: 'fake-valid-nonce') #params[:payment_method_nonce]
     if @result.success?
       @cart.update_attributes(cart_status_id: 2) 
       session[:cart_id] = nil
-      @order.save
-      AcotsMailer.transaction_email(@order).deliver
-      redirect_to order_path(@order), notice: "Congratulations! Your transaction has been successfully!"
+      if @order.save
+        AcotsMailer.transaction_email(@order).deliver
+        redirect_to order_path(@order), notice: "Congratulations! Your transaction has been successfully!"
+      end
     else
       flash[:alert] = "Something went wrong while processing your transaction. Please try again!"
       gon.client_token = generate_client_token
