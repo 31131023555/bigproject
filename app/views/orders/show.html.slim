@@ -1,0 +1,28 @@
+.content
+  .grid-container#invoice
+    .leftd
+      .d1
+        h1 Congratulation!
+        p Your order have been recorded and will be deliveried soon.
+        p 
+          | On the right is your invoice for this order with ID: 
+          strong = @order.id
+      .d2
+        img src = "/assets/kitten.jpg"
+    .rightd
+      h1 Invoice
+      - @oldcart.order_items.each do |item|
+        .item
+          h4 = item.product.title
+          p 
+            | Quantity: 
+            span = item.quantity
+          p 
+            | Price: 
+            span = number_to_currency item.total_price
+      p 
+        | Address: 
+        span = @order.delivery_address
+      p 
+        | Purchased at: 
+        span = @order.purchased_at

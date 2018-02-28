@@ -21,11 +21,16 @@ class ApplicationController < ActionController::Base
         session[:cart_id] = @cart.id
       end
     else
-      if current_user.carts.length > 0
-        @cart = current_user.carts.first
+      if current_user.carts.find_by(cart_status_id: 1) == nil
+        if !session[:cart_id].nil?
+          @cart = Cart.find(session[:cart_id])
+          @cart.update(user_id: current_user.id) 
+        else
+          @cart = Cart.create
+          session[:cart_id] = @cart.id
+        end
       else
-        @cart = Cart.find(session[:cart_id])
-        @cart.update(user_id: current_user.id)
+        @cart = current_user.carts.find_by(cart_status_id: 1)
       end
     end    
   end
