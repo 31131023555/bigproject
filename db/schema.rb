@@ -10,12 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180201023709) do
+ActiveRecord::Schema.define(version: 20180201090159) do
+
+  create_table "cart_statuses", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.decimal "subtotal", precision: 12, scale: 2
+    t.decimal "shipping", precision: 12, scale: 2
+    t.decimal "total", precision: 12, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "cart_status_id"
+    t.index ["cart_status_id"], name: "index_carts_on_cart_status_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.decimal "unit_price", precision: 12, scale: 2
+    t.integer "quantity"
+    t.decimal "total_price", precision: 12, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id"
+    t.integer "cart_id"
+    t.index ["cart_id"], name: "index_order_items_on_cart_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|

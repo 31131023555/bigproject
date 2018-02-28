@@ -7,6 +7,18 @@ div.content
       div.description
         h4 Description from the publisher:      
         p = @product.description
-      div.add
-        p = "Price: $#{ @product.price }"
-        = link_to 'Add to Cart', href='#', class: 'button add-btn'  
+
+        = form_for @order_item, remote: true do |f|
+          h4
+            | Unit Price: 
+            span = number_to_currency @product.price
+          .input-group
+            = f.number_field :quantity, value: 1, class: "form-control", min: 1
+            .input-group-btn
+              = f.hidden_field :product_id, value: @product.id
+              = f.submit "Add to Cart", class: "btn btn-primary"
+           
+
+        / div.add
+        /   p = "Price: $#{ @product.price }"
+        /   = link_to 'Add to Cart', href='#', class: 'button add-btn'  
