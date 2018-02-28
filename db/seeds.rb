@@ -1,6 +1,6 @@
 categories_list = [
   'Books', 'Toys', 'Luggage', 'Wireless', 'KindleStore', 
-  'Appliances', 'VideoGames', 'Electronics', 'Tools', 'Baby'
+  'Appliances', 'VideoGames', 'Electronics', 'Automotive', 'Baby'
 ]
 
 categories_list.each do |cat|
@@ -17,7 +17,9 @@ categories_list.each do |cat|
         price: Random.new.rand(1.00..100.00),
         imgurl: item.get_hash('SmallImage')['URL'],
         description: item.get_element('EditorialReview').get('Content'),
-        category_id: category.id
+        category_id: category.id,
+        largeimgurl: item.get_hash('LargeImage')['URL'],
+        ASIN: item.get('ASIN')
     )
   end
 end

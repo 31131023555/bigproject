@@ -1,0 +1,12 @@
+div.content
+  div.grid-container
+    div.image
+      img src = "#{@product.largeimgurl}"
+    div.text 
+      h2 = @product.title
+      div.description
+        h4 Description from the publisher:      
+        p = @product.description
+      div.add
+        p = "Price: $#{ @product.price }"
+        = link_to 'Add to Cart', href='#', class: 'button add-btn'  
