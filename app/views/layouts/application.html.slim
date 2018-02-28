@@ -14,11 +14,8 @@ html
           em Bring all the convenience to you
       div.task
         = link_to 'View cart', cart_path(@cart), class: 'button'
-        = link_to 'Login', href='#', class: 'button'
-        = yield(:nav) 
-
-    / - flash.each do |name, msg|
-    /   = content_tag :div, msg, class: name
+        = link_to 'Login', user_session_path, class: 'button'
+        = yield(:nav)     
 
     = yield
 

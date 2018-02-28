@@ -1,4 +1,6 @@
 div.content
+  - flash.each do |name, msg|
+      = content_tag :div, msg, class: name
   div.shopping-cart
     = render "carts/shopping_cart"
 
@@ -7,4 +9,4 @@ div.content
     | Total: 
     span = number_to_currency @cart.subtotal
   hr
-  = link_to 'Check out', '#'
+  = link_to 'Check out', new_order_path

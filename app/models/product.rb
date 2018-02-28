@@ -8,15 +8,15 @@ class Product < ApplicationRecord
 	validates :price, presence: true, numericality: { greater_than: 0 }
 	validates :imgurl, presence: true
 	validate :title_is_shorter_than_description
-	before_validation :decode_html_entities_from_description
-	before_validation :strip_html_from_description
+	before_validation :decode_html_entities
+	before_validation :strip_html
 	
-	def decode_html_entities_from_description
+	def decode_html_entities
 		self.title = HTMLEntities.new.decode self.title
 		self.description = HTMLEntities.new.decode self.description
 	end
 
-	def strip_html_from_description
+	def strip_html
 		self.title = ActionView::Base.full_sanitizer.sanitize(
 			self.title)
 		self.description = ActionView::Base.full_sanitizer.sanitize(

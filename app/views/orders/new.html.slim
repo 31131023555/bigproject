@@ -1,0 +1,28 @@
+.content
+  .grid-container#ordernew
+    .order-info
+      - @cart.order_items.each do |order_item|
+        .item
+          h4 = order_item.product.title
+          p 
+            | Quantity: 
+            span = order_item.quantity
+          p 
+            | Price: 
+            span = number_to_currency order_item.total_price
+      h4#right 
+        | Cart price: 
+        span = number_to_currency @cart.subtotal
+    .checkout
+      .d1
+        h4 
+          | Welcome  
+          span = @user.email
+        .speech
+          p Now, you are in checkout step. Please check all the items you have picked on to the cart whether it is right. 
+          p If it is ok. You can checkout now.
+          p Because we connect with Paypal so we encourage you pay by Paypal. It is very fast and convenient.
+          p Hope you enjoy it!
+          = link_to image_tag(src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), '#'
+      .d2
+        img src = "/assets/kitten.jpg"
