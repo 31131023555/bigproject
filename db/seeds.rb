@@ -1,7 +1,23 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+categories_list = [
+  'Books', 'Toys', 'Luggage', 'Wireless', 'KindleStore', 
+  'Appliances', 'VideoGames', 'Electronics', 'Tools', 'Baby'
+]
+
+categories_list.each do |cat|
+  Category.create(title: cat)
+
+  category = Category.find_by_title(cat)
+  res = Amazon::Ecs.item_search('apple', {
+    :response_group => 'EditorialReview,Images,ItemAttributes,ItemIds,Offers',
+    :search_index => cat})
+  res.items.each do |item|
+    item_attributes = item.get_element('ItemAttributes')
+    Product.create(
+        title: item_attributes.get('Title'),
+        price: Random.new.rand(1.00..100.00),
+        imgurl: item.get_hash('SmallImage')['URL'],
+        description: item.get_element('EditorialReview').get('Content'),
+        category_id: category.id
+    )
+  end
+end

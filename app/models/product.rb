@@ -1,0 +1,28 @@
+require 'htmlentities'
+
+class Product < ApplicationRecord
+	belongs_to :category, optional: true	
+	validates :title, presence: true
+	validates :description, presence: true
+	validates :price, presence: true, numericality: { greater_than: 0 }
+	validates :imgurl, presence: true
+	validate :title_is_shorter_than_description
+	before_validation :decode_html_entities_from_description
+	before_validation :strip_html_from_description
+	
+	def decode_html_entities_from_description
+		self.description = HTMLEntities.new.decode self.description
+	end
+
+	def strip_html_from_description
+		self.description = ActionView::Base.full_sanitizer.sanitize(
+			self.description)
+	end
+
+	def title_is_shorter_than_description
+		return if title.blank? or description.blank?
+		if description.length < title.length
+			errors.add(:title, 'Title must be shorter than description')
+		end
+	end
+end
